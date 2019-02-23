@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "mocha",
-    "deploy": "pm2 start server.js",
+    "start": "pm2 start server.js",
     "stop": "pm2 stop server.js"
   },
   "devDependencies": {
