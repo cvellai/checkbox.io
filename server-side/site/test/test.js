@@ -13,7 +13,7 @@ describe('checkbox.io', () => {
         timeout: 500
       });
 
-      expect(response.body).to.include('Multiple Choice Question');
+      expect(response.body.preview).to.include('Multiple Choice Question');
     });
   });
 });
