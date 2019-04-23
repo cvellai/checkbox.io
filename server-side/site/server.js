@@ -30,7 +30,12 @@ app.post('/api/design/survey',
 	{
 		console.log(req.body.markdown);
 		//var text = marqdown.render( req.query.markdown );
-		var text = marqdown.render( req.body.markdown );
+	        // For normal operation
+		//var text = marqdown.render( req.body.markdown ); 
+	        // For Kubernetes microservice
+		let text = await got.post("http://localhost:32000/render",req).catch( err => 
+			console.error("ERROR! Check marqdown2html app...") 
+		);
 		res.send( {preview: text} );
 	}
 );
