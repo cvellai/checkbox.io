@@ -26,23 +26,39 @@ var corsOptions = {
 
 app.options('/api/study/vote/submit/', cors(corsOptions));
 
-app.post('/api/design/survey', 
-	function(req,res)
-	{
-		console.log(req.body.markdown);
-		//var text = marqdown.render( req.query.markdown );
-	        // For normal operation
-		//var text = marqdown.render( req.body.markdown ); 
-	        // For Kubernetes microservice
-		let text = got.post("http://marqdown:32000/render",req).then( (res) => {
-		 	res.send( {preview: text} );
-		}).catch( err => 
-			console.error("ERROR! Check marqdown2html app...") 
-		);
-		//res.send( {preview: text} );
-	}
-);
+// app.post('/api/design/survey', 
+// 	function(req,res)
+// 	{
+// 		console.log(req.body.markdown);
+// 		//var text = marqdown.render( req.query.markdown );
+// 	        // For normal operation
+// 		//var text = marqdown.render( req.body.markdown ); 
+// 	        // For Kubernetes microservice
+// 		var headers = {"Content-type":"application/json"}
+// 		let text = got.post("http://marqdown:32000/render",{headers: headers, json: true, body: req.body}).then(function(response) => {
+// 		 	//res.send( {preview: text} );
+// 			res.send( response.body ); 
+// 		}).catch( err => 
+// 			console.error("ERROR! Check marqdown2html app...") 
+// 		);
+// 		//res.send( {preview: text} );
+// 	}
+// );
 
+app.post('/api/design/survey', 
+    function(req,res)
+    {
+        console.log(req.body.markdown);
+        // var text = marqdown.render( req.body.markdown );
+        // res.send( {preview: text} );
+        var headers = {"Content-type":"application/json"}
+        got.post('http://marqdown_service:31000/render', {headers: headers, json: true, body: req.body}).then(function(response){
+            console.log(response.body.preview);
+            var text = response.body;
+            res.send( text );
+            });
+    }
+);
 //app.get('/api/design/survey/all', routes.findAll );
 //app.get('/api/design/survey/:id', routes.findById );
 //app.get('/api/design/survey/admin/:token', routes.findByToken );
