@@ -52,7 +52,7 @@ app.post('/api/design/survey',
         // var text = marqdown.render( req.body.markdown );
         // res.send( {preview: text} );
         var headers = {"Content-type":"application/json"}
-        got.post('http://marqdown_service:32000/render', {headers: headers, json: true, body: req.body}).then(function(response){
+        got.post('http://marqdown:32000/render', {headers: headers, json: true, body: req.body}).then(function(response){
             console.log(response.body.preview);
             var text = response.body;
             res.send( text );
